@@ -17,7 +17,7 @@ LWFirstPod is a lightweight Swift library that provides easy access to various i
 
   s.homepage         = 'https://github.com/logicwind/LWFirstPod'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Logicwind' => 'harshil.gandhi@logicwind.com' }
+  s.author           = { 'harshil-gandhi-us' => 'harshil.gandhi@logicwind.com' }
   s.source           = { :git => 'https://github.com/logicwind/LWFirstPod.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '13.0'

@@ -59,7 +59,7 @@ Or add it directly in Xcode: `File > Add Packages...` and enter the repository U
 
 ## Author
 
-Harshil Gandhi, harshil.gandhi@logicwind.com
+harshil-gandhi-us, harshil.gandhi@logicwind.com
 
 ## License
 
