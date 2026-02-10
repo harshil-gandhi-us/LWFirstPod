@@ -2,6 +2,7 @@
 import UIKit
 import Foundation
 import Network
+import Reachability
 import SystemConfiguration
 
 public class LWDeviceInfo {
@@ -193,27 +194,15 @@ public class LWDeviceInfo {
     }
     
     public var networkState: String {
-        var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
-        zeroAddress.sin_family = sa_family_t(AF_INET)
-        
-        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
-            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
-                SCNetworkReachabilityCreateWithAddress(nil, $0)
-            }
-        }) else {
+        let reachability = try? Reachability()
+        switch reachability?.connection {
+        case .wifi, .cellular:
+            return "connected"
+        case .unavailable:
+            return "disconnected"
+        case .none:
             return "unknown"
         }
-        
-        var flags: SCNetworkReachabilityFlags = []
-        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
-            return "unknown"
-        }
-        
-        let isReachable = flags.contains(.reachable)
-        let needsConnection = flags.contains(.connectionRequired)
-        
-        return (isReachable && !needsConnection) ? "connected" : "disconnected"
     }
     
     public var brand: String {
@@ -247,19 +236,17 @@ public class LWDeviceInfo {
     }
     
     public var networkType: String {
-        let reachability = SCNetworkReachabilityCreateWithName(nil, "www.google.com")
-        var flags: SCNetworkReachabilityFlags = []
-        SCNetworkReachabilityGetFlags(reachability!, &flags)
-        
-        if !flags.contains(.reachable) {
-            return "none"
-        }
-        
-        if flags.contains(.isWWAN) {
+        let reachability = try? Reachability()
+        switch reachability?.connection {
+        case .wifi:
+            return "wifi"
+        case .cellular:
             return "cellular"
+        case .unavailable:
+            return "none"
+        case .none:
+            return "unknown"
         }
-        
-        return "wifi"
     }
 }
 #endif

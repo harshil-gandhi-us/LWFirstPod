@@ -1,0 +1,6 @@
+framework module LWFirstPod {
+  umbrella header "LWFirstPod-umbrella.h"
+
+  export *
+  module * { export * }
+}

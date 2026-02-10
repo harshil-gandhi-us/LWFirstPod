@@ -12,12 +12,14 @@ let package = Package(
             targets: ["LWFirstPod"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/ashleymills/Reachability.swift", from: "5.1.0")
     ],
     targets: [
         .target(
             name: "LWFirstPod",
-            dependencies: [],
+            dependencies: [
+                .product(name: "Reachability", package: "Reachability.swift")
+            ],
             path: "LWFirstPod/Classes"
         ),
         .testTarget(

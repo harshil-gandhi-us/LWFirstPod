@@ -51,7 +51,7 @@ To integrate LWFirstPod into your Xcode project using SPM, add it to the depende
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/logicwind/LWFirstPod.git", .upToNextMajor(from: "0.1.0"))
+    .package(url: "https://github.com/harshil-gandhi-us/LWFirstPod.git", .upToNextMajor(from: "0.1.1"))
 ]
 ```
 
