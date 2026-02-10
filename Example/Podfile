@@ -1,9 +1,9 @@
 use_frameworks!
 
-platform :ios, '10.0'
+platform :ios, '13.0'
 
 target 'LWFirstPod_Example' do
-  pod 'LWFirstPod', :path => '../'
+  # pod 'LWFirstPod', :path => '../'
 
   target 'LWFirstPod_Tests' do
     inherit! :search_paths

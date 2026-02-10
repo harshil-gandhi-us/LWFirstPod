@@ -7,18 +7,39 @@
 //
 
 import UIKit
+import LWFirstPod
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        setupUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showDeviceInfo()
+    }
+    
+    private func setupUI() {
+        let button = UIButton(type: .system)
+        button.setTitle("Show Device Info", for: .normal)
+        button.addTarget(self, action: #selector(showDeviceInfo), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(button)
+        
+        NSLayoutConstraint.activate([
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+
+    @objc func showDeviceInfo() {
+        LWDeviceInfo.shared.showDeviceInfoAlert(from: self)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-
 }
 
