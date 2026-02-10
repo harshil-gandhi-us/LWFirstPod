@@ -14,7 +14,6 @@ LWFirstPod is a comprehensive iOS device information retrieval library. It provi
 - Memory usage (Total and App)
 - Storage details (Total and Used)
 - Device model, OS version, and locale information
-- Easy-to-use UI Alert showcase
 
 ## Requirements
 
