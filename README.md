@@ -9,12 +9,11 @@ LWFirstPod is a comprehensive iOS device information retrieval library. It provi
 
 ## Features
 
-- [x] Battery level and status
-- [x] Network reachability and type (WiFi/Cellular)
-- [x] Memory usage (Total and App)
-- [x] Storage details (Total and Used)
-- [x] Device model, OS version, and locale information
-- [x] Easy-to-use UI Alert showcase
+- Battery level and status
+- Network reachability and type
+- Memory usage
+- Storage details
+- Device model, OS version, and locale information
 
 ## Requirements
 
@@ -59,7 +58,7 @@ Or add it directly in Xcode: `File > Add Packages...` and enter the repository U
 
 ## Author
 
-Logicwind, harshil.gandhi@logicwind.com
+harshil-gandhi-us, harshil.gandhi@logicwind.com
 
 ## License
 

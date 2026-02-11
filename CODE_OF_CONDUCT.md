@@ -1,31 +1,15 @@
-# Code of Conduct for LWFirstPod
+# Code of Conduct
 
-## Our Pledge
-In the interest of fostering an open and welcoming environment, we as contributors and maintainers of **LWFirstPod** pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+## Our Goal
+We are committed to providing a friendly, safe, and welcoming environment for everyone contributing to **LWFirstPod**.
 
-## Our Standards
-Examples of behavior that contributes to creating a positive environment include:
-* Using welcoming and inclusive language
-* Being respectful of differing viewpoints and experiences
-* Gracefully accepting constructive criticism
-* Focusing on what is best for the community
-* Showing empathy towards other community members
+## Expected Behavior
+* **Be Respectful**: Treat everyone with kindness and respect.
+* **Be Inclusive**: Welcome people of all backgrounds and experience levels.
+* **Be Professional**: Avoid harassment, offensive comments, or any inappropriate behavior.
 
-Examples of unacceptable behavior by participants include:
-* The use of sexualized language or imagery and unwelcome sexual attention or advances
-* Trolling, insulting/derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information without explicit permission
-* Other conduct which could reasonably be considered inappropriate in a professional setting
-
-## Our Responsibilities
-Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
-
-## Scope
-This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community.
+## Reporting
+If you encounter or witness behavior that violates this Code of Conduct, please report it to **harshil.gandhi@logicwind.com**.
 
 ## Enforcement
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at **harshil.gandhi@logicwind.com**. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances.
-
-## Attribution
-This Code of Conduct is adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.4.
+Maintainers will review all reports and take appropriate action to ensure the community remains a safe space for everyone.
