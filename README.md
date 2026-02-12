@@ -7,6 +7,10 @@
 
 LWFirstPod is a comprehensive iOS device information retrieval library. It provides easy-to-use APIs to fetch device details like battery level, status, network connectivity, memory usage, storage, and more.
 
+## Description
+
+LWFirstPod is designed to bridge platform gaps by providing a unified API for accessing device information across different platforms. The library exposes individual properties as well as a comprehensive dictionary-based method for retrieving all device information at once.
+
 ## Features
 
 - Battery level and status
@@ -19,6 +23,44 @@ LWFirstPod is a comprehensive iOS device information retrieval library. It provi
 
 - iOS 13.0+
 - Swift 5.0+
+
+## Methods
+
+### `getAllDeviceInfo() -> [String: Any]`
+
+Returns a dictionary containing all available device information. This method provides a unified interface for retrieving comprehensive device details, mapped from corresponding implementations on other platforms for consistent API design.
+
+**Returns:** A dictionary containing the following keys:
+- `releaseVersionNumber`: App release version
+- `buildVersionNumber`: App build version
+- `appName`: Application name
+- `deviceModel`: Device model identifier
+- `deviceOsVersion`: iOS version
+- `deviceBatteryLevel`: Battery level (0-100)
+- `batteryStatus`: Current battery state
+- `deviceMemory`: Total device memory
+- `appMemoryUsage`: Memory used by the app
+- `deviceRegionCode`: Region code
+- `deviceRegionName`: Region name
+- `deviceTotalStorage`: Total storage capacity
+- `deviceUsedStorage`: Used storage capacity
+- `deviceScreenSize`: Screen resolution
+- `deviceOrientation`: Current device orientation
+- `timezone`: Device timezone
+- `networkState`: Network connectivity state
+- `brand`: Device brand (Apple)
+- `manufacturer`: Device manufacturer (Apple)
+- `platform`: Platform (iOS)
+- `firstInstallTime`: App first installation timestamp
+- `isSimulator`: Whether running on simulator
+- `networkType`: Type of network connection
+
+### `showDeviceInfoAlert(from viewController: UIViewController? = nil)`
+
+Displays an alert containing all device information. If no view controller is provided, the method finds the topmost view controller in the window hierarchy.
+
+**Parameters:**
+- `viewController`: Optional UIViewController to present the alert from
 
 ## Example
 
