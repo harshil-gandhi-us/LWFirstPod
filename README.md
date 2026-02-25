@@ -76,6 +76,18 @@ LWDeviceInfo.shared.showDeviceInfoAlert(from: self)
 let info = LWDeviceInfo.shared.getAllDeviceInfo()
 ```
 
+**Objective-C:**
+
+```objc
+@import LWFirstPod;
+
+// Show device info alert
+[[LWDeviceInfo shared] showDeviceInfoAlertFrom:self];
+
+// Get all device info as NSDictionary
+NSDictionary *info = [[LWDeviceInfo shared] getAllDeviceInfo];
+```
+
 ## Installation
 
 ### CocoaPods
@@ -92,7 +104,7 @@ To integrate LWFirstPod into your Xcode project using SPM, add it to the depende
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harshil-gandhi-us/LWFirstPod.git", .upToNextMajor(from: "0.1.1"))
+    .package(url: "https://github.com/harshil-gandhi-us/LWFirstPod.git", .upToNextMajor(from: "0.1.4"))
 ]
 ```
 
