@@ -13,11 +13,15 @@ LWFirstPod is designed to bridge platform gaps by providing a unified API for ac
 
 ## Features
 
-- Battery level and status
-- Network reachability and type
-- Memory usage
-- Storage details
-- Device model, OS version, and locale information
+- Battery level and status (real-time; returns `"charging"` on simulator)
+- Network reachability and granular network type (Wi-Fi / 5G / 4G / 3G / 2G)
+- App and device memory usage
+- Total and used storage
+- Device model identifier (returns simulated model on simulator)
+- Device marketing name
+- OS version, locale, timezone, screen size
+- Device orientation with interface orientation fallback
+- Simulator detection
 
 ## Requirements
 
@@ -28,39 +32,43 @@ LWFirstPod is designed to bridge platform gaps by providing a unified API for ac
 
 ### `getAllDeviceInfo() -> [String: Any]`
 
-Returns a dictionary containing all available device information. This method provides a unified interface for retrieving comprehensive device details, mapped from corresponding implementations on other platforms for consistent API design.
+Returns a dictionary containing all available device information.
 
 **Returns:** A dictionary containing the following keys:
-- `releaseVersionNumber`: App release version
-- `buildVersionNumber`: App build version
-- `appName`: Application name
-- `deviceModel`: Device model identifier
-- `deviceOsVersion`: iOS version
-- `deviceBatteryLevel`: Battery level (0-100)
-- `batteryStatus`: Current battery state
-- `deviceMemory`: Total device memory
-- `appMemoryUsage`: Memory used by the app
-- `deviceRegionCode`: Region code
-- `deviceRegionName`: Region name
-- `deviceTotalStorage`: Total storage capacity
-- `deviceUsedStorage`: Used storage capacity
-- `deviceScreenSize`: Screen resolution
-- `deviceOrientation`: Current device orientation
-- `timezone`: Device timezone
-- `networkState`: Network connectivity state
-- `brand`: Device brand (Apple)
-- `manufacturer`: Device manufacturer (Apple)
-- `platform`: Platform (iOS)
-- `firstInstallTime`: App first installation timestamp
-- `isSimulator`: Whether running on simulator
-- `networkType`: Type of network connection
+
+| Key | Description | Example |
+|-----|-------------|---------|
+| `releaseVersionNumber` | App release version | `"1.0.0"` |
+| `buildVersionNumber` | App build number | `"42"` |
+| `appName` | Application name | `"MyApp"` |
+| `deviceModel` | Hardware model identifier | `"iPhone17,5"` |
+| `deviceMarketingName` | Human-readable device name | `"iPhone 16e"` |
+| `deviceOsVersion` | iOS version | `"18.3.1"` |
+| `deviceBatteryLevel` | Battery percentage (0–100) | `87.0` |
+| `batteryStatus` | Battery state | `"unplugged"` / `"charging"` / `"full"` / `"unknown"` / `"charging"` *(simulator)* |
+| `deviceMemory` | Total physical memory | `"8 GB"` |
+| `appMemoryUsage` | App's current memory usage | `"54 MB"` |
+| `deviceRegionCode` | Locale region code | `"US"` |
+| `deviceRegionName` | Locale region name | `"United States"` |
+| `deviceTotalStorage` | Total storage capacity | `"256 GB"` |
+| `deviceUsedStorage` | Used storage | `"128 GB"` |
+| `deviceScreenSize` | Screen resolution in pixels | `"1179x2556"` |
+| `deviceOrientation` | Current orientation (falls back to interface orientation) | `"portrait"` / `"landscapeLeft"` / etc. |
+| `timezone` | Device timezone identifier | `"America/New_York"` |
+| `networkState` | Connectivity state | `"connected"` / `"disconnected"` / `"unknown"` |
+| `networkType` | Network type | `"wifi"` / `"5g"` / `"4g"` / `"3g"` / `"2g"` / `"cellular"` / `"none"` / `"unknown"` |
+| `brand` | Device brand | `"Apple"` |
+| `manufacturer` | Device manufacturer | `"Apple"` |
+| `platform` | Platform | `"iOS"` |
+| `firstInstallTime` | App first install timestamp (ISO 8601) | `"2024-01-15T10:30:00Z"` |
+| `isSimulator` | Whether running on simulator | `true` / `false` |
 
 ### `showDeviceInfoAlert(from viewController: UIViewController? = nil)`
 
-Displays an alert containing all device information. If no view controller is provided, the method finds the topmost view controller in the window hierarchy.
+Displays an alert containing all device information. If no view controller is provided, automatically finds the topmost view controller.
 
 **Parameters:**
-- `viewController`: Optional UIViewController to present the alert from
+- `viewController`: Optional `UIViewController` to present the alert from
 
 ## Example
 
@@ -104,7 +112,7 @@ To integrate LWFirstPod into your Xcode project using SPM, add it to the depende
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harshil-gandhi-us/LWFirstPod.git", .upToNextMajor(from: "0.1.4"))
+    .package(url: "https://github.com/harshil-gandhi-us/LWFirstPod.git", .upToNextMajor(from: "0.1.6"))
 ]
 ```
 

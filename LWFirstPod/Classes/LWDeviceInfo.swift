@@ -4,14 +4,18 @@
     import Network
     import Reachability
     import SystemConfiguration
+    import CoreTelephony
 
     @objc public class LWDeviceInfo: NSObject {
 
         @objc public static let shared = LWDeviceInfo()
 
+        private let reachability = try? Reachability()
+
         private override init() {
             super.init()
             UIDevice.current.isBatteryMonitoringEnabled = true
+            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         }
 
         @objc public func getAllDeviceInfo() -> [String: Any] {
@@ -97,14 +101,17 @@
         }
 
         @objc public var deviceModel: String {
-            var systemInfo = utsname()
-            uname(&systemInfo)
-            let machineMirror = Mirror(reflecting: systemInfo.machine)
-            let identifier = machineMirror.children.reduce("") { identifier, element in
-                guard let value = element.value as? Int8, value != 0 else { return identifier }
-                return identifier + String(UnicodeScalar(UInt8(value)))
-            }
-            return identifier
+            #if targetEnvironment(simulator)
+                return ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "simulator"
+            #else
+                var systemInfo = utsname()
+                uname(&systemInfo)
+                let machineMirror = Mirror(reflecting: systemInfo.machine)
+                return machineMirror.children.reduce("") { identifier, element in
+                    guard let value = element.value as? Int8, value != 0 else { return identifier }
+                    return identifier + String(UnicodeScalar(UInt8(value)))
+                }
+            #endif
         }
 
         public var deviceOsVersion: String {
@@ -117,13 +124,17 @@
         }
 
         public var batteryStatus: String {
-            switch UIDevice.current.batteryState {
-            case .unplugged: return "unplugged"
-            case .charging: return "charging"
-            case .full: return "full"
-            case .unknown: return "unknown"
-            @unknown default: return "unknown"
-            }
+            #if targetEnvironment(simulator)
+                return "charging"
+            #else
+                switch UIDevice.current.batteryState {
+                case .unplugged: return "unplugged"
+                case .charging: return "charging"
+                case .full: return "full"
+                case .unknown: return "unknown"
+                @unknown default: return "unknown"
+                }
+            #endif
         }
 
         public var deviceMemory: String {
@@ -187,15 +198,27 @@
         }
 
         public var deviceOrientation: String {
-            switch UIDevice.current.orientation {
+            let orientation = UIDevice.current.orientation
+            switch orientation {
             case .portrait: return "portrait"
             case .portraitUpsideDown: return "portraitUpsideDown"
             case .landscapeLeft: return "landscapeLeft"
             case .landscapeRight: return "landscapeRight"
             case .faceUp: return "faceUp"
             case .faceDown: return "faceDown"
-            case .unknown: return "unknown"
-            @unknown default: return "unknown"
+            case .unknown: break
+            @unknown default: break
+            }
+            // Fallback to window interface orientation when device orientation is unknown
+            let interfaceOrientation = UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .first?.interfaceOrientation
+            switch interfaceOrientation {
+            case .portrait: return "portrait"
+            case .portraitUpsideDown: return "portraitUpsideDown"
+            case .landscapeLeft: return "landscapeLeft"
+            case .landscapeRight: return "landscapeRight"
+            default: return "unknown"
             }
         }
 
@@ -204,13 +227,12 @@
         }
 
         public var networkState: String {
-            let reachability = try? Reachability()
             switch reachability?.connection {
             case .wifi, .cellular:
                 return "connected"
             case .unavailable:
                 return "disconnected"
-            case .none:
+            default:
                 return "unknown"
             }
         }
@@ -241,24 +263,48 @@
             return ""
         }
 
-        public var isSimulator: Bool {
-            #if targetEnvironment(simulator)
-                return true
-            #else
-                return false
-            #endif
-        }
+        #if targetEnvironment(simulator)
+            public let isSimulator: Bool = true
+        #else
+            public let isSimulator: Bool = false
+        #endif
 
         public var networkType: String {
-            let reachability = try? Reachability()
             switch reachability?.connection {
             case .wifi:
                 return "wifi"
             case .cellular:
-                return "cellular"
+                let radioTech = CTTelephonyNetworkInfo()
+                    .serviceCurrentRadioAccessTechnology?.values.first
+                switch radioTech {
+                case _ where {
+                    if #available(iOS 14.1, *) {
+                        return radioTech == CTRadioAccessTechnologyNRNSA
+                            || radioTech == CTRadioAccessTechnologyNR
+                    }
+                    return false
+                }():
+                    return "5g"
+                case CTRadioAccessTechnologyLTE:
+                    return "4g"
+                case CTRadioAccessTechnologyWCDMA,
+                     CTRadioAccessTechnologyHSDPA,
+                     CTRadioAccessTechnologyHSUPA,
+                     CTRadioAccessTechnologyCDMAEVDORev0,
+                     CTRadioAccessTechnologyCDMAEVDORevA,
+                     CTRadioAccessTechnologyCDMAEVDORevB,
+                     CTRadioAccessTechnologyeHRPD:
+                    return "3g"
+                case CTRadioAccessTechnologyGPRS,
+                     CTRadioAccessTechnologyEdge,
+                     CTRadioAccessTechnologyCDMA1x:
+                    return "2g"
+                default:
+                    return "cellular"
+                }
             case .unavailable:
                 return "none"
-            case .none:
+            default:
                 return "unknown"
             }
         }
