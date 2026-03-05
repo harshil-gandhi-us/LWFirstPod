@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.1.7] - 2026-03-05
+- Optimized code and minor improvements across `LWDeviceInfo`, README, and added `validate_spm.sh`
+
 ## [0.1.6] - 2026-03-05
 - Shared single `Reachability` instance across `networkState` and `networkType` to avoid redundant allocations
 - `networkType` now returns granular values: `wifi`, `5g`, `4g`, `3g`, `2g`, `cellular`, `none`, `unknown` via `CTTelephonyNetworkInfo`
