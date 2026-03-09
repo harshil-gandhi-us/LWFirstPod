@@ -9,7 +9,7 @@ let package = Package(
     products: [
         .library(
             name: "LWFirstPod",
-            targets: ["LWFirstPod"]),
+            targets: ["LWFirstPod", "LWFirstPodObjC"])
     ],
     dependencies: [
         .package(url: "https://github.com/ashleymills/Reachability.swift", from: "5.1.0")
@@ -21,6 +21,12 @@ let package = Package(
                 .product(name: "Reachability", package: "Reachability.swift")
             ],
             path: "LWFirstPod/Classes"
+        ),
+        .target(
+            name: "LWFirstPodObjC",
+            dependencies: ["LWFirstPod"],
+            path: "LWFirstPod/ObjCBridge",
+            publicHeadersPath: "."
         ),
         .testTarget(
             name: "LWFirstPodTests",

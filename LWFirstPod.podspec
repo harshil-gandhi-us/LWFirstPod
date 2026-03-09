@@ -27,4 +27,5 @@ LWFirstPod is a lightweight Swift library that provides easy access to various i
   
   s.frameworks = 'UIKit', 'SystemConfiguration', 'Network'
   s.dependency 'ReachabilitySwift', '~> 5.0'
+
 end

@@ -6,9 +6,9 @@
     import SystemConfiguration
     import CoreTelephony
 
-    @objc public class LWDeviceInfo: NSObject {
+    @objcMembers public class LWDeviceInfo: NSObject {
 
-        @objc public static let shared = LWDeviceInfo()
+        public static let shared = LWDeviceInfo()
 
         private let reachability = try? Reachability()
 
@@ -18,7 +18,7 @@
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         }
 
-        @objc public func getAllDeviceInfo() -> [String: Any] {
+        public func getAllDeviceInfo() -> [String: Any] {
             return [
                 "releaseVersionNumber": releaseVersionNumber,
                 "buildVersionNumber": buildVersionNumber,
@@ -46,7 +46,7 @@
             ]
         }
 
-        @objc public func showDeviceInfoAlert(from viewController: UIViewController? = nil) {
+        public func showDeviceInfoAlert(from viewController: UIViewController? = nil) {
             let info = getAllDeviceInfo()
             let sortedKeys = info.keys.sorted()
 
@@ -100,9 +100,10 @@
                 .infoDictionary?["CFBundleName"] as? String ?? ""
         }
 
-        @objc public var deviceModel: String {
+        public var deviceModel: String {
             #if targetEnvironment(simulator)
-                return ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "simulator"
+                return ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"]
+                    ?? "simulator"
             #else
                 var systemInfo = utsname()
                 uname(&systemInfo)
@@ -277,7 +278,8 @@
                 let radioTech = CTTelephonyNetworkInfo()
                     .serviceCurrentRadioAccessTechnology?.values.first
                 switch radioTech {
-                case _ where {
+                case _
+                where {
                     if #available(iOS 14.1, *) {
                         return radioTech == CTRadioAccessTechnologyNRNSA
                             || radioTech == CTRadioAccessTechnologyNR
@@ -288,16 +290,16 @@
                 case CTRadioAccessTechnologyLTE:
                     return "4g"
                 case CTRadioAccessTechnologyWCDMA,
-                     CTRadioAccessTechnologyHSDPA,
-                     CTRadioAccessTechnologyHSUPA,
-                     CTRadioAccessTechnologyCDMAEVDORev0,
-                     CTRadioAccessTechnologyCDMAEVDORevA,
-                     CTRadioAccessTechnologyCDMAEVDORevB,
-                     CTRadioAccessTechnologyeHRPD:
+                    CTRadioAccessTechnologyHSDPA,
+                    CTRadioAccessTechnologyHSUPA,
+                    CTRadioAccessTechnologyCDMAEVDORev0,
+                    CTRadioAccessTechnologyCDMAEVDORevA,
+                    CTRadioAccessTechnologyCDMAEVDORevB,
+                    CTRadioAccessTechnologyeHRPD:
                     return "3g"
                 case CTRadioAccessTechnologyGPRS,
-                     CTRadioAccessTechnologyEdge,
-                     CTRadioAccessTechnologyCDMA1x:
+                    CTRadioAccessTechnologyEdge,
+                    CTRadioAccessTechnologyCDMA1x:
                     return "2g"
                 default:
                     return "cellular"
